@@ -1,0 +1,6 @@
+270ed7,127.0.0.1,GET,http://127.0.0.1:8000/,1636047160,,404
+53d1fa,127.0.0.1,GET,http://127.0.0.1:8000/favicon.ico,1636047162,efd846,404
+efd846,127.0.0.1,GET,http://127.0.0.1:8000/favicon.ico,1636047162,,404
+68f588,127.0.0.1,GET,http://localhost/frikili/public/index.php/,1636047250,,404
+8b2547,127.0.0.1,GET,http://localhost/frikili/public/index.php/,1636047257,,404
+b81a24,127.0.0.1,GET,http://localhost/frikili/public/index.php/,1636047259,,404
