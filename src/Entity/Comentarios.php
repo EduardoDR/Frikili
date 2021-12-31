@@ -27,6 +27,16 @@ class Comentarios
      */
     private $fecha_publicacion;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comentarios")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Posts::class, inversedBy="comentarios")
+     */
+    private $posts;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +62,30 @@ class Comentarios
     public function setFechaPublicacion(\DateTimeInterface $fecha_publicacion): self
     {
         $this->fecha_publicacion = $fecha_publicacion;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPosts(): ?Posts
+    {
+        return $this->posts;
+    }
+
+    public function setPosts(?Posts $posts): self
+    {
+        $this->posts = $posts;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -44,6 +46,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      */
     private $nombre;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comentarios::class, mappedBy="user")
+     */
+    private $comentarios;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Posts::class, mappedBy="user")
+     */
+    private $posts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Profesion::class, mappedBy="user")
+     */
+    private $profesion;
+
+    public function __construct()
+    {
+        $this->comentarios = new ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->profesion = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -165,5 +189,95 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNombre($nombre): void
     {
         $this->nombre = $nombre;
+    }
+
+    /**
+     * @return Collection|Comentarios[]
+     */
+    public function getComentarios(): Collection
+    {
+        return $this->comentarios;
+    }
+
+    public function addComentario(Comentarios $comentario): self
+    {
+        if (!$this->comentarios->contains($comentario)) {
+            $this->comentarios[] = $comentario;
+            $comentario->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComentario(Comentarios $comentario): self
+    {
+        if ($this->comentarios->removeElement($comentario)) {
+            // set the owning side to null (unless already changed)
+            if ($comentario->getUser() === $this) {
+                $comentario->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Posts[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Posts $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Posts $post): self
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getUser() === $this) {
+                $post->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Profesion[]
+     */
+    public function getProfesion(): Collection
+    {
+        return $this->profesion;
+    }
+
+    public function addProfesion(Profesion $profesion): self
+    {
+        if (!$this->profesion->contains($profesion)) {
+            $this->profesion[] = $profesion;
+            $profesion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfesion(Profesion $profesion): self
+    {
+        if ($this->profesion->removeElement($profesion)) {
+            // set the owning side to null (unless already changed)
+            if ($profesion->getUser() === $this) {
+                $profesion->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
